@@ -26,13 +26,10 @@
                         Id = ctx.TestRunId
                     })).DoNotFailOnErrorMessages().CustomConfig(c =>
                     {
+                        c.ConfigureTransport().TransportTransactionMode = transactionMode;
                         if (transactionMode == TransportTransactionMode.ReceiveOnly)
                         {
                             c.EnableOutbox();
-                        }
-                        else
-                        {
-                            c.ConfigureTransport().TransportTransactionMode = transactionMode;
                         }
                     }))
                 .Done(c => c.ReplyReceived)
